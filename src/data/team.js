@@ -1,0 +1,32 @@
+// The Fitness22 team, shown on the Who We Are page.
+// Photos live in public/images/team/. Add a person by adding a line here.
+
+export const team = [
+  { name: 'Benny Shaviv', role: 'Chairman & Founder', photo: '/images/team/benny-shaviv.webp' },
+  { name: 'Dan Lehrer', role: 'CEO', photo: '/images/team/dan-lehrer.webp' },
+  { name: 'Yossi Tarablus', role: 'VP Marketing', photo: '/images/team/yossi-tarablus.webp' },
+  { name: 'Eran Mordechai', role: 'Design Director', photo: '/images/team/eran-mordechai.webp' },
+  { name: 'Alexander Mikhnevich', role: 'Product Director', photo: '/images/team/alexander-mikhnevich.webp' },
+  { name: 'Shai Ariman', role: 'R&D', photo: '/images/team/shai-ariman.webp' },
+  { name: 'Noam Bar Oz', role: 'R&D', photo: '/images/team/noam-bar-oz.webp' },
+  { name: 'Artem Sarkisov', role: 'R&D', photo: '/images/team/artem-sarkisov.webp' },
+  { name: 'Maria Yelfimova', role: 'R&D', photo: '/images/team/maria-yelfimova.webp' },
+  { name: 'Maor Shabo', role: 'R&D', photo: '/images/team/maor-shabo.webp' },
+  { name: 'Porat Fitoussi', role: 'R&D', photo: '/images/team/porat-fitoussi.webp' },
+  { name: 'Valeria Isakovich', role: 'R&D', photo: '/images/team/valeria-isakovich.webp' },
+  { name: 'Lior Cohen', role: 'R&D', photo: '/images/team/lior-cohen.webp' },
+  { name: 'Anael Peguine', role: 'R&D', photo: '/images/team/anael-peguine.webp' },
+  { name: 'Matan Rath', role: 'R&D', photo: '/images/team/matan-rath.webp' },
+  { name: 'Riki Nagar', role: 'QA', photo: '/images/team/riki-nagar.webp' },
+  { name: 'Michael Krivosheev', role: 'QA', photo: '/images/team/michael-krivosheev.webp' },
+  { name: 'Andrei Levitskii', role: 'QA', photo: '/images/team/andrei-levitskii.webp' },
+  { name: 'Liran Aviv', role: 'Design', photo: '/images/team/liran-aviv.webp' },
+  { name: 'Arcadi Greenman', role: 'Design', photo: '/images/team/arcadi-greenman.webp' },
+  { name: 'Alon Finkelstein', role: 'Marketing', photo: '/images/team/alon-finkelstein.webp' },
+  { name: 'Shay Oren', role: 'Data', photo: '/images/team/shay-oren.webp' },
+  { name: 'Evyatar Perets', role: 'Customer Success', photo: '/images/team/evyatar-perets.webp' },
+  { name: 'Migle Simkute', role: 'Customer Success', photo: '/images/team/migle-simkute.webp' },
+  { name: 'Shira Sofrin', role: 'HR & Operations', photo: '/images/team/shira-sofrin.webp' },
+  { name: 'Jonathan Segev', role: 'HR & Operations', photo: '/images/team/jonathan-segev.webp' },
+  { name: 'Roy Shaviv', role: 'HR & Operations', photo: '/images/team/roy-shaviv.webp' },
+];

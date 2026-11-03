@@ -1,0 +1,1380 @@
+/* ---------- Brand tokens ---------- */
+:root {
+  --green: rgb(11, 249, 71);
+  --gray: rgb(182, 186, 183);
+  --text: rgb(37, 37, 37);
+  --text-muted: rgb(80, 84, 81);
+  --bg: #f4f5f2; /* page background: soft off-white */
+  --light: #eaece8; /* light sections / boxes, one step darker than the page */
+  --border: rgba(37, 37, 37, 0.15);
+  --radius-pill: 40px;
+  --radius: 8px;
+  --gutter: 16px;
+  --font: 'Montserrat', system-ui, sans-serif;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ---------- Green words in titles (components/Accent.jsx) ---------- */
+.accent {
+  color: var(--green);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 16px 28px;
+  border-radius: var(--radius-pill);
+  font-family: inherit; /* <button> elements don't inherit the font by default */
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+
+
+/* Transparent with green text; fills green on hover */
+.btn--outline {
+  font-weight: 700;
+  border: 2px solid var(--green);
+  background: transparent;
+  color: var(--green);
+  transition: background 0.25s, color 0.25s, transform 0.15s;
+}
+
+.btn--outline:hover {
+  background: var(--green);
+  color: #fff;
+  opacity: 1;
+}
+
+/* Outline button whose text stays black (job page "Apply Now") */
+.btn--black-text,
+.btn--black-text:hover {
+  color: var(--text);
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  color: #fff;
+  transition: background 0.3s, backdrop-filter 0.3s;
+}
+
+.header--scrolled,
+.header--open {
+  background: rgba(20, 24, 25, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.header-logo img {
+  height: 20px;
+  width: auto;
+}
+
+.nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0 0 0 -16px; /* line the first link's text up with the page edge */
+  padding: 0;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s;
+}
+
+.nav-link.active {
+  color: #fff;
+}
+
+.nav-link:hover {
+  color: var(--green);
+}
+
+
+
+/* The pill that glides between items on hover (framer-motion layoutId) */
+.nav-hover-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(0, 0, 0, 0.55); /* dark pill so it stands out on bright video frames too */
+}
+
+.nav-chevron {
+  transition: transform 0.3s;
+}
+
+.nav-item:hover .nav-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 8px;
+}
+
+.nav-dropdown-panel {
+  list-style: none;
+  margin: 0;
+  padding: 12px;
+  width: max-content;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.nav-dropdown-item:hover {
+  background: var(--light);
+}
+
+.nav-dropdown-item img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.nav-dropdown-item strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav-dropdown-item small {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+
+
+
+
+
+
+
+.nav-toggle {
+  display: none;
+  position: relative;
+  width: 28px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* The three lines of the ☰ icon */
+.nav-toggle span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: #fff;
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.2s, top 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.nav-toggle span:nth-child(1) { top: 0; }
+.nav-toggle span:nth-child(2) { top: 9px; }
+.nav-toggle span:nth-child(3) { top: 18px; }
+
+/* Open: top and bottom lines meet in the middle and cross into an X, the middle one fades out */
+.nav-toggle.is-open span:nth-child(1) { top: 9px; transform: rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle.is-open span:nth-child(3) { top: 9px; transform: rotate(-45deg); }
+
+/* ---------- Mobile side drawer (components/MobileMenu.jsx) ---------- */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9; /* just under the header, so the X button stays on top */
+  width: min(320px, 85vw);
+  padding: 96px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  background: #222c2d;
+  box-shadow: 8px 0 32px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-menu-link {
+  display: block;
+  padding: 12px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link.active {
+  color: var(--green);
+}
+
+.mobile-menu-sub {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0 0 0 4px;
+  border-left: 2px solid rgba(255, 255, 255, 0.12);
+}
+
+.mobile-menu-sub a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+}
+
+.mobile-menu-sub a:hover {
+  color: var(--green);
+}
+
+.mobile-menu-sub img {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+}
+
+.mobile-menu-footer {
+  margin-top: 20px; /* right under the links (not pinned to the bottom, where phone browser bars cover it) */
+}
+
+.mobile-menu-footer .btn {
+  display: block;
+  text-align: center;
+}
+
+/* ---------- Cover (hero) ---------- */
+.cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: max(700px, 100dvh);
+  padding: 90px var(--gutter) 130px;
+  background: var(--gray);
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+
+/* Home hero: two stacked parts — the video on top (taking the remaining height), fading smoothly
+   into a solid black band below it, where the title and button sit. They never overlap. */
+.cover--low {
+  height: max(700px, 100dvh); /* fixed height: the video gets whatever the text band doesn't use */
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  background: #000;
+}
+
+.cover--low .cover-video {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  /* soft fade from the video into the black below */
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  animation: video-fade-in 1.6s ease-out both;
+}
+
+/* No dark tint here: the text sits on black, so the video can stay bright and crisp */
+.cover--low::after {
+  display: none;
+}
+
+.cover--low .cover-content {
+  align-self: center;
+  padding: 8px var(--gutter) 130px; /* room for the scroll arrow below the button */
+}
+
+@keyframes video-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Short photo banner at the top of inner pages */
+.cover--banner {
+  min-height: 0;
+  height: clamp(320px, 45vw, 560px);
+  padding-bottom: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.cover-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Darken the video/photo slightly so white text stays readable */
+.cover--media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.cover-title {
+  font-size: clamp(36px, 6vw, 72px);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.cover-scroll {
+  position: absolute;
+  z-index: 1;
+  bottom: 60px;
+  left: 50%;
+  translate: -50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+}
+
+/* ---------- Generic sections ---------- */
+.section {
+  padding: 80px var(--gutter);
+}
+
+.section--light {
+  background: var(--light);
+}
+
+.narrow {
+  max-width: 672px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(30px, 4vw, 40px);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.lead {
+  font-size: 21px;
+  line-height: 1.5;
+}
+
+.center {
+  text-align: center;
+}
+
+/* ---------- Split (text | media) — Workplace & Locations ---------- */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 555px;
+}
+
+.split-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 40px;
+  background: var(--gray);
+  color: #fff;
+}
+
+
+.split-text .section-title {
+  margin-bottom: 16px;
+}
+
+.split-text p {
+  margin: 0 auto 12px;
+  max-width: 560px;
+}
+
+.split-media {
+  position: relative;
+  min-height: 400px;
+}
+
+
+/* ---------- Workplace slideshow ---------- */
+.slideshow img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s;
+}
+
+.slideshow img.active {
+  opacity: 1;
+}
+
+.slideshow-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  translate: -50%;
+  display: flex;
+  gap: 8px;
+}
+
+.slideshow-dots button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.slideshow-dots button.active {
+  background: #fff;
+}
+
+/* ---------- Job list ---------- */
+.job-grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1080px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.job-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  min-height: 180px;
+  padding: 16px;
+  /* Same shape as the "Job openings" button: green outline, fills green on hover; text stays black */
+  border: 2px solid var(--green);
+  border-radius: 24px;
+  background: transparent;
+  color: var(--text);
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.4s ease-in-out, background 0.25s, box-shadow 0.4s;
+  will-change: transform;
+}
+
+.job-card:hover {
+  background: var(--green);
+  box-shadow: 14px 28px 40px rgba(11, 249, 71, 0.25);
+}
+
+.job-card-title {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+/* ---------- Gallery collage ---------- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 44vw;
+  background: var(--light);
+}
+
+.gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  grid-column: span 4;
+}
+
+.gallery img:nth-child(4) {
+  grid-column: span 3;
+}
+
+.gallery img:nth-child(5) {
+  grid-column: span 9;
+}
+
+/* ---------- Offices map (Who We Are page) ---------- */
+.offices-map {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.offices-map-dots,
+.offices-map-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.offices-map-overlay path {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 0.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Country borders: green outline with a very light green fill */
+.offices-map-overlay .offices-map-border {
+  fill: rgba(11, 249, 71, 0.12);
+  stroke-width: 0.3;
+}
+
+/* Each office: a pulsing green dot with a label above it */
+.office-pin {
+  position: absolute;
+  translate: -50% -50%;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.office-pin-dot {
+  position: relative;
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgba(11, 249, 71, 0.25);
+}
+
+.office-pin-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.office-pin-label {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  white-space: nowrap;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+/* Label on the left / right of the pin instead of above it */
+.office-pin--left .office-pin-label,
+.office-pin--right .office-pin-label {
+  bottom: auto;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.office-pin--left .office-pin-label {
+  left: auto;
+  right: calc(100% + 12px);
+}
+
+.office-pin--right .office-pin-label {
+  left: calc(100% + 12px);
+}
+
+.office-pin-label svg {
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.office-pin-label strong {
+  display: block;
+  font-size: 14px;
+}
+
+/* The address only shows on hover, to keep the map clean */
+.office-pin-label small {
+  display: none;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.office-pin:hover .office-pin-label {
+  border-color: var(--green);
+  transform: translateY(-2px);
+}
+
+.office-pin:hover .office-pin-label small {
+  display: block;
+}
+
+/* ---------- Job page ---------- */
+.job {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 64px var(--gutter) 96px;
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.breadcrumbs a {
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: var(--green);
+}
+
+.job-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 96px;
+}
+
+.job-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Job page banner: plain dark brand color, breadcrumbs + title + meta close together */
+.cover--job {
+  min-height: 0;
+  padding: 140px var(--gutter) 72px;
+  background: #222c2d;
+}
+
+.cover--job .cover-content {
+  gap: 16px;
+}
+
+/* The apply button + share links follow you down the page */
+.job-sidebar {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.job-sidebar .btn {
+  text-align: center;
+}
+
+.share {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.share a,
+.share button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.share a:hover,
+.share button:hover {
+  background: var(--light);
+  color: var(--text);
+}
+
+.job-section {
+  margin-top: 56px;
+}
+
+.job-section:first-child {
+  margin-top: 0;
+}
+
+.job-section > h2,
+.prose h2 {
+  font-size: 24px;
+  margin: 40px 0 12px;
+}
+
+.job-section > h2:first-child {
+  margin-top: 0;
+}
+
+.prose,
+.job-section p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.prose ul {
+  padding-left: 20px;
+}
+
+.prose li {
+  margin-bottom: 12px;
+}
+
+.prose li::marker {
+  color: var(--green);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 40px 0;
+}
+
+/* Gray box with company highlights */
+.highlights {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--light);
+  border-radius: var(--radius);
+}
+
+.highlights li {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.highlights svg {
+  color: var(--green);
+}
+
+.highlights strong {
+  display: block;
+}
+
+.highlights span {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.job-apply-bottom {
+  margin-top: 56px;
+}
+
+
+/* ---------- Who We Are: team ---------- */
+.team-grid {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1240px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 35px;
+}
+
+.team-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 35px;
+  box-shadow: 10px 20px 26px rgba(0, 0, 0, 0.16);
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s;
+  will-change: transform;
+}
+
+.team-card:hover {
+  box-shadow: 14px 28px 40px rgba(0, 0, 0, 0.22);
+}
+
+.team-card img {
+  width: 100%;
+  aspect-ratio: 270 / 285;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.5s;
+}
+
+.team-card-info {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 10px 15px;
+  text-align: center;
+  background: rgba(34, 44, 45, 0.67);
+  transform: translateY(100%);
+  transition: transform 0.5s;
+}
+
+.team-card-info strong {
+  display: block;
+  color: #fff;
+  font-size: 18px;
+}
+
+.team-card-info span {
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.team-card:hover img {
+  filter: grayscale(0);
+}
+
+.team-card:hover .team-card-info {
+  transform: translateY(0);
+}
+
+/* Touch screens can't hover — always show names there */
+@media (hover: none) {
+  .team-card-info {
+    transform: none;
+  }
+}
+
+/* ---------- Our Apps ---------- */
+.narrow-wide {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.app-shortcuts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.app-shortcuts a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.app-shortcuts img {
+  width: 80px;
+  border-radius: 18px;
+  transition: transform 0.2s;
+}
+
+.app-shortcuts a:hover img {
+  transform: translateY(-4px);
+}
+
+.app-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  padding: 80px max(var(--gutter), calc((100% - 1200px) / 2));
+  background: #222c2d;
+  color: #fff;
+  overflow: hidden;
+  scroll-margin-top: 72px;
+}
+
+.app-section--light {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-section--reversed .app-section-text {
+  order: 2;
+}
+
+.app-icons {
+  display: flex;
+  gap: 16px;
+}
+
+.app-icons img {
+  width: 88px;
+  border-radius: 20px;
+}
+
+.app-name {
+  font-size: clamp(40px, 5vw, 64px);
+  margin-top: 24px;
+}
+
+.app-tagline {
+  font-size: clamp(20px, 2vw, 28px);
+  margin-top: 8px;
+  color: var(--green);
+}
+
+.app-section p {
+  line-height: 1.8;
+}
+
+.app-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 24px 0;
+  color: #ff8a00; /* star color */
+}
+
+.app-rating span {
+  margin-left: 8px;
+  color: #fff;
+}
+
+.app-section--light .app-rating span {
+  color: var(--text);
+}
+
+/* Phones: stacked in the middle; the ones behind fan out to the upper-left */
+.app-phones {
+  position: relative;
+  height: 560px;
+}
+
+.app-phones img {
+  position: absolute;
+  top: 30px; /* room for the back phones moving up */
+  left: 50%;
+  width: 260px;
+  height: calc(100% - 60px);
+  margin-left: -80px; /* a bit right of center, since the back phones move left */
+  object-fit: contain;
+}
+
+/* ---------- App store badges ---------- */
+.store-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.store-badges img {
+  height: 44px;
+  width: auto;
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-intro h2,
+.contact-apps h2 {
+  font-size: clamp(30px, 3.5vw, 44px);
+  margin-bottom: 32px;
+}
+
+/* Short green accent bar under the headings */
+.contact-intro h2::after,
+.contact-apps h2::after {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 20px;
+  border-radius: 2px;
+  background: var(--green);
+}
+
+.contact-card {
+  padding: 40px;
+  background: #fff;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 22px;
+  border: 2px solid transparent;
+  border-radius: 25px;
+  background: var(--light);
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.contact-form :is(input, select, textarea):focus {
+  outline: none;
+  border-color: var(--green);
+  background: #fff;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.contact-submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.contact-thanks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  color: var(--text);
+}
+
+.contact-thanks svg {
+  color: var(--green);
+}
+
+.contact-apps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.icon-collage {
+  position: relative;
+  height: 340px;
+}
+
+.icon-collage img {
+  position: absolute;
+  border-radius: 22%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: float 6s ease-in-out infinite;
+}
+
+.icon-collage img:nth-child(1) { width: 110px; left: 0; top: 0; }
+.icon-collage img:nth-child(2) { width: 96px; left: 38%; top: 40px; animation-delay: -1.5s; }
+.icon-collage img:nth-child(3) { width: 76px; left: 22%; top: 170px; animation-delay: -3s; }
+.icon-collage img:nth-child(4) { width: 96px; left: 50%; top: 240px; animation-delay: -4.5s; }
+
+@keyframes float {
+  50% { transform: translateY(-12px); }
+}
+
+/* ---------- About + footer ---------- */
+.facts {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 32px 0 0;
+}
+
+.facts dt {
+  display: inline;
+  font-weight: 700;
+}
+
+.facts dd {
+  display: inline;
+  margin: 0;
+}
+
+
+
+
+
+
+
+
+.copyright {
+  margin: 0;
+  padding: 24px var(--gutter);
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .section {
+    padding: 56px var(--gutter);
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .split-text {
+    padding: 56px var(--gutter);
+  }
+
+  .split-media {
+    min-height: 320px;
+  }
+
+  .gallery {
+    grid-auto-rows: 80vw;
+  }
+
+  .gallery img,
+  .gallery img:nth-child(n) {
+    grid-column: span 12;
+  }
+
+
+  .header {
+    padding: 0 var(--gutter);
+  }
+
+  /* Header: links move into the side drawer, the ☰ button appears */
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .nav-chevron,
+  .nav-hover-bg,
+  .nav-dropdown {
+    display: none;
+  }
+
+  .app-section,
+  .contact,
+  .contact-apps {
+    grid-template-columns: 1fr;
+  }
+
+  .app-section--reversed .app-section-text {
+    order: 0;
+  }
+
+  .app-phones {
+    height: 440px;
+  }
+
+  .app-phones img {
+    width: 190px;
+    margin-left: -60px;
+  }
+
+  .contact-card {
+    padding: 24px;
+  }
+
+  /* Job page: one column, Apply button pinned to the bottom of the screen */
+  .job {
+    padding-top: 40px;
+  }
+
+  .job-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .job-sidebar {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: 5;
+    padding: 12px var(--gutter);
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .job-sidebar .btn {
+    width: 100%;
+  }
+
+  .share,
+  .job-apply-bottom {
+    display: none;
+  }
+
+  /* keep the footer visible above the pinned Apply bar */
+  body:has(.job-sidebar) {
+    padding-bottom: 80px;
+  }
+
+  .highlights {
+    padding: 24px;
+  }
+
+  .icon-collage {
+    height: 300px;
+  }
+
+  /* Offices map: smaller labels so they fit on narrow screens */
+  .office-pin-label {
+    gap: 0;
+    padding: 5px 9px;
+  }
+
+  .office-pin-label svg {
+    display: none;
+  }
+
+  .office-pin-label strong {
+    font-size: 11px;
+  }
+}
