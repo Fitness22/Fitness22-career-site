@@ -100,22 +100,22 @@ export const whatYouDo = {
 
 export const gallery = [1, 2, 3, 4, 5].map((n) => `/images/gallery/${n}.webp`);
 
-// Offices on the map (Who We Are page). Clicking one opens its address in Google Maps.
-// `label`: which side of the pin its name appears on — 'top' (default), 'left' or 'right'.
+// Offices (Who We Are page): pick one from the list to see its details and zoom the map to it.
+// `email` and `phone` are optional.
 export const offices = [
   {
-    name: 'Main Office · Petah Tikva',
-    address: 'Derech Yitshak Rabin 1, Petah Tikva, Israel',
+    name: 'Main Office (Petah Tiqwa)',
+    address: ['Derech Yitshak Rabin 1', 'Petah Tikva', 'Israel'],
     lat: 32.090149,
     lng: 34.8625494,
-    label: 'left',
+    email: 'jobs@fitness22.com',
+    phone: '03-7444330',
   },
   {
     name: 'Larnaca, Cyprus',
-    address: 'Larnaca, Cyprus',
+    address: ['Cyprus', '6045 Larnaka', 'Cyprus'],
     lat: 34.9183053,
     lng: 33.6201012,
-    label: 'right',
   },
 ];
 

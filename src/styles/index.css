@@ -651,127 +651,84 @@ a {
   }
 }
 
-/* ---------- Offices map (Who We Are page) ---------- */
-.offices-map {
-  position: relative;
-  max-width: 1280px;
-  margin: 0 auto;
+/* ---------- Office locations (components/OfficeLocations.jsx) ---------- */
+/* Gray panel with the office picker + details on the left, map on the right (like the old site) */
+.locations {
+  min-height: 0;
 }
 
-.offices-map-dots,
-.offices-map-overlay {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.offices-map-overlay path {
-  fill: none;
-  stroke: var(--green);
-  stroke-width: 0.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Country borders: green outline with a very light green fill */
-.offices-map-overlay .offices-map-border {
-  fill: rgba(11, 249, 71, 0.12);
-  stroke-width: 0.3;
-}
-
-/* Each office: a pulsing green dot with a label above it */
-.office-pin {
-  position: absolute;
-  translate: -50% -50%;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.office-pin-dot {
-  position: relative;
-  display: block;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 0 4px rgba(11, 249, 71, 0.25);
-}
-
-.office-pin-dot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s ease-out infinite;
-}
-
-@keyframes pulse {
-  to {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
-.office-pin-label {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  translate: -50% 0;
-  display: flex;
+.locations-panel {
+  justify-content: flex-start;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  white-space: nowrap;
-  background: #fff;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-  transition: border-color 0.2s, transform 0.2s;
+  padding: 80px 20px;
 }
 
-/* Label on the left / right of the pin instead of above it */
-.office-pin--left .office-pin-label,
-.office-pin--right .office-pin-label {
-  bottom: auto;
-  top: 50%;
-  translate: 0 -50%;
+.location-select {
+  width: 100%;
+  max-width: 420px;
+  min-width: min(300px, 100%);
+  margin-bottom: 24px;
+  padding: 16px 40px 16px 16px;
+  border: 0;
+  border-radius: var(--radius);
+  font: inherit;
+  color: var(--gray);
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23252525' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center;
+  appearance: none;
+  cursor: pointer;
 }
 
-.office-pin--left .office-pin-label {
-  left: auto;
-  right: calc(100% + 12px);
+.location-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 18px;
+  text-align: center;
 }
 
-.office-pin--right .office-pin-label {
-  left: calc(100% + 12px);
+.location-details p {
+  margin: 0;
+  max-width: none;
 }
 
-.office-pin-label svg {
+.location-details a {
+  text-underline-offset: 4px;
+}
+
+.location-details a:hover {
   color: var(--green);
-  flex-shrink: 0;
 }
 
-.office-pin-label strong {
-  display: block;
-  font-size: 14px;
+.locations-map {
+  height: 450px;
+  background: #e8e8e6;
 }
 
-/* The address only shows on hover, to keep the map clean */
-.office-pin-label small {
-  display: none;
-  font-size: 12px;
-  color: var(--text-muted);
+/* Turn the colorful map tiles light gray (only the map, not the pins) */
+.locations-map .leaflet-tile-pane {
+  filter: grayscale(1) brightness(1.08) contrast(0.85);
 }
 
-.office-pin:hover .office-pin-label {
-  border-color: var(--green);
-  transform: translateY(-2px);
+/* Gray pin markers */
+.office-marker {
+  color: #8e928f;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
 }
 
-.office-pin:hover .office-pin-label small {
-  display: block;
+/* Zoom buttons: gray squares with white +/− */
+.locations-map .leaflet-bar {
+  border: 0;
+}
+
+.locations-map .leaflet-bar a {
+  background: var(--gray);
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.locations-map .leaflet-bar a:hover {
+  background: #a3a7a4;
 }
 
 /* ---------- Job page ---------- */
@@ -1397,17 +1354,7 @@ a {
     height: 300px;
   }
 
-  /* Offices map: smaller labels so they fit on narrow screens */
-  .office-pin-label {
-    gap: 0;
-    padding: 5px 9px;
-  }
-
-  .office-pin-label svg {
-    display: none;
-  }
-
-  .office-pin-label strong {
-    font-size: 11px;
+  .locations-map {
+    height: 320px;
   }
 }

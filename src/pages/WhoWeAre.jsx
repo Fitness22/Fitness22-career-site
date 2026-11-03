@@ -5,8 +5,8 @@ import TeamCard from '../components/TeamCard.jsx';
 import { pages, whoWeAre } from '../data/content.js';
 import { team } from '../data/team.js';
 
-// The map's data is fairly large, so it's only downloaded when this page is opened
-const OfficesMap = lazy(() => import('../components/OfficesMap.jsx'));
+// The map library is only downloaded when this page is opened
+const OfficeLocations = lazy(() => import('../components/OfficeLocations.jsx'));
 
 export default function WhoWeAre() {
   return (
@@ -28,7 +28,7 @@ export default function WhoWeAre() {
       </section>
 
       <Suspense fallback={null}>
-        <OfficesMap />
+        <OfficeLocations />
       </Suspense>
     </>
   );
