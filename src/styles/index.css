@@ -375,6 +375,7 @@ a {
   position: relative;
   flex: 1 1 0;
   min-height: 0;
+  object-position: center 30%; /* when cropped, cut mostly from the bottom (which fades out anyway) */
   /* soft fade from the video into the black below */
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
