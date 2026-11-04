@@ -7,7 +7,8 @@
 //                    'job' is a short plain dark block (job pages, page not found)
 //   scrollTo       – id of the section the "scroll down" arrow jumps to
 export default function Cover({ video, videoMobile, poster, image, variant, scrollTo, children }) {
-  const className = ['cover', (video || image) && 'cover--media', variant && `cover--${variant}`]
+  // The plain dark job-page banner fades smoothly into the page below it
+  const className = ['cover', (video || image) && 'cover--media', variant && `cover--${variant}`, variant === 'job' && 'fade-bottom']
     .filter(Boolean)
     .join(' ');
 

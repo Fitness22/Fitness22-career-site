@@ -5,6 +5,7 @@
   --text: rgb(37, 37, 37);
   --text-muted: rgb(80, 84, 81);
   --bg: #f4f5f2; /* page background: soft off-white */
+  --dark: #222c2d; /* dark sections */
   --light: #eaece8; /* light sections / boxes, one step darker than the page */
   --border: rgba(37, 37, 37, 0.15);
   --radius-pill: 40px;
@@ -405,6 +406,24 @@ a {
   background-position: center;
 }
 
+/* Photo banners fade softly into the page at the bottom (above the dark tint, below the title) */
+.cover--banner.cover--media::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  height: 35%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--bg) 8%, transparent) 18%,
+    color-mix(in srgb, var(--bg) 30%, transparent) 40%,
+    color-mix(in srgb, var(--bg) 70%, transparent) 65%,
+    color-mix(in srgb, var(--bg) 92%, transparent) 85%,
+    var(--bg)
+  );
+}
+
 .cover-video {
   position: absolute;
   inset: 0;
@@ -486,6 +505,29 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 555px;
+}
+
+/* Home: the black hero above fades smoothly down into this section (overlay over gray + photo) */
+#workplace {
+  position: relative;
+}
+
+#workplace::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 180px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #000,
+    rgba(0, 0, 0, 0.92) 18%,
+    rgba(0, 0, 0, 0.7) 40%,
+    rgba(0, 0, 0, 0.3) 65%,
+    rgba(0, 0, 0, 0.08) 85%,
+    transparent
+  );
 }
 
 .split-text {
@@ -589,6 +631,326 @@ a {
 .job-card-title {
   font-size: 21px;
   font-weight: 700;
+}
+
+/* ---------- Numbers + globe (components/Stats.jsx, GlobeUsers.jsx) ---------- */
+.stats {
+  padding: 240px var(--gutter) 280px; /* extra room for the fades at the top and bottom */
+  color: #fff;
+}
+
+.stats-row {
+  max-width: 1150px;
+  margin: 0 auto 70px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+
+.stat-number {
+  display: inline-block;
+  font-size: clamp(38px, 5vw, 70px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--green);
+  font-variant-numeric: tabular-nums; /* digits keep the same width while counting */
+}
+
+/* Counting number: both copies share one grid cell; the invisible final value sets the width */
+.stat-count {
+  display: inline-grid;
+  text-align: right;
+}
+
+.stat-count > span {
+  grid-area: 1 / 1;
+}
+
+.stat-count > span:first-child {
+  visibility: hidden;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 8px;
+  font-size: clamp(14px, 1.7vw, 24px);
+}
+
+.globe {
+  position: relative;
+  width: min(640px, 100%);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  user-select: none;
+}
+
+.globe canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: none;
+  opacity: 0;
+  transition: opacity 1.2s ease; /* fades in once the globe is ready */
+}
+
+/* Floating label above each dot, placed by CSS Anchor Positioning */
+.globe-label {
+  position: absolute;
+  bottom: anchor(top);
+  left: anchor(center);
+  translate: -50% -6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 10px;
+  line-height: 1.15;
+  white-space: nowrap;
+  pointer-events: none;
+  background: rgba(34, 44, 45, 0.85);
+  border: 1px solid rgba(11, 249, 71, 0.35);
+  border-radius: 8px;
+  transition: opacity 0.3s, filter 0.3s;
+}
+
+.globe-label-name {
+  font-size: 13px;
+}
+
+.globe-label-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+/* The plain list is only for screen readers... */
+.globe-list {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+/* ...unless the browser can't place the labels: then show the list under the globe instead */
+@supports not (anchor-name: --a) {
+  .globe-label {
+    display: none;
+  }
+
+  .globe {
+    aspect-ratio: auto;
+  }
+
+  .globe canvas {
+    aspect-ratio: 1;
+    height: auto;
+  }
+
+  .globe-list {
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 24px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 18px;
+  }
+
+  .globe-list strong {
+    color: var(--green);
+  }
+}
+
+/* ---------- Reviews (components/Reviews.jsx) ---------- */
+.reviews {
+  text-align: center;
+}
+
+.rating-stars {
+  position: relative;
+  width: min(560px, 85vw);
+  margin: 0 auto 40px;
+}
+
+.rating-stars svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.rating-stars polygon {
+  stroke-width: 10;
+  stroke-linejoin: round;
+}
+
+.rating-stars-empty polygon {
+  fill: #e4e4e4;
+  stroke: #e4e4e4;
+}
+
+/* Green copy on top, revealed left to right (clip-path set from JS) */
+.rating-stars-fill {
+  position: absolute;
+  inset: 0;
+  transition: clip-path 1.7s ease-out;
+}
+
+.rating-stars-fill polygon {
+  fill: var(--green);
+  stroke: var(--green);
+}
+
+.reviews-title {
+  margin-bottom: 8px;
+}
+
+.reviews-subtitle {
+  margin: 0;
+  font-size: 20px;
+  color: var(--text-muted);
+}
+
+.review-columns {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  max-width: 1200px;
+  max-height: 740px;
+  margin: 60px auto 0;
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Soft fade at the top and bottom (fixed overlays: cheaper than masking the moving columns) */
+.review-columns::before,
+.review-columns::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 20%;
+  pointer-events: none;
+}
+
+.review-columns::before {
+  top: 0;
+  background: linear-gradient(var(--bg), transparent);
+}
+
+.review-columns::after {
+  bottom: 0;
+  background: linear-gradient(transparent, var(--bg));
+}
+
+.review-column {
+  flex: 0 1 380px;
+  min-width: 0;
+}
+
+/* Slides up by half (= one copy of the list), then restarts: seamless */
+.review-track {
+  display: flex;
+  flex-direction: column;
+  animation: review-scroll linear infinite;
+  will-change: transform;
+}
+
+@keyframes review-scroll {
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+/* margin (not gap) so both copies are exactly the same height and the loop doesn't jump */
+.review-card {
+  margin: 0 0 24px;
+  padding: 32px;
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 28px;
+  box-shadow: 0 12px 30px rgba(44, 58, 72, 0.08);
+}
+
+.review-stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 12px;
+  color: var(--green);
+}
+
+.review-title {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.review-text {
+  margin: 0 0 24px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #707070;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-author img {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.review-name {
+  display: block;
+  font-weight: 700;
+}
+
+.review-app {
+  display: block;
+  font-size: 14px;
+  font-style: italic;
+  color: #b7b7b7;
+}
+
+/* Fewer columns on smaller screens: 2 on tablets, 1 on phones */
+@media (max-width: 991px) {
+  .review-column:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 575px) {
+  .review-column:nth-child(2) {
+    display: none;
+  }
+
+  .review-columns {
+    max-height: 600px;
+    margin-top: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-track {
+    animation: none;
+  }
+
+  .rating-stars-fill {
+    transition: none;
+  }
 }
 
 /* ---------- Gallery: endless strip of photo cards (components/Gallery.jsx) ---------- */
@@ -768,8 +1130,8 @@ a {
 /* Job page banner: plain dark brand color, breadcrumbs + title + meta close together */
 .cover--job {
   min-height: 0;
-  padding: 140px var(--gutter) 72px;
-  background: #222c2d;
+  padding: 140px var(--gutter) 200px; /* extra bottom room for the fade */
+  background: var(--dark);
 }
 
 .cover--job .cover-content {
@@ -1012,6 +1374,14 @@ a {
   scroll-margin-top: 72px;
 }
 
+.app-section.fade-top {
+  padding-top: 240px;
+}
+
+.app-section.fade-bottom {
+  padding-bottom: 280px;
+}
+
 .app-section--light {
   background: var(--bg);
   color: var(--text);
@@ -1063,21 +1433,33 @@ a {
   color: var(--text);
 }
 
-/* Phones: stacked in the middle; the ones behind fan out to the upper-left */
+/* Phones (same as fitness22.com): stacked in the middle, first one on top. When the section
+   scrolls into view (.in-view) they fan out: first up to the left, last down to the right.
+   Reversed (every second) sections fan the other way. */
 .app-phones {
   position: relative;
-  height: 560px;
+  height: 650px;
 }
 
 .app-phones img {
   position: absolute;
-  top: 30px; /* room for the back phones moving up */
+  top: 0;
   left: 50%;
-  width: 260px;
-  height: calc(100% - 60px);
-  margin-left: -80px; /* a bit right of center, since the back phones move left */
-  object-fit: contain;
+  width: auto;
+  max-height: 650px;
+  transform: translate(-50%, 0);
+  transition: transform 1s ease;
 }
+
+.app-phones img:nth-child(1) { z-index: 3; }
+.app-phones img:nth-child(2) { z-index: 2; }
+.app-phones img:nth-child(3) { z-index: 1; }
+
+.app-phones.in-view img:nth-child(1) { transform: translate(-75%, -30px); }
+.app-phones.in-view img:nth-child(3) { transform: translate(-25%, 30px); }
+
+.app-section--reversed .app-phones.in-view img:nth-child(1) { transform: translate(-25%, -30px); }
+.app-section--reversed .app-phones.in-view img:nth-child(3) { transform: translate(-75%, 30px); }
 
 /* ---------- App store badges ---------- */
 .store-badges {
@@ -1290,6 +1672,28 @@ a {
     display: none;
   }
 
+  .stats {
+    padding: 160px var(--gutter) 180px;
+  }
+
+  .app-section.fade-top {
+    padding-top: 170px;
+  }
+
+  .app-section.fade-bottom {
+    padding-bottom: 200px;
+  }
+
+  .cover--job {
+    padding-bottom: 150px;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 16px;
+    margin-bottom: 30px;
+  }
+
   .app-section,
   .contact,
   .contact-apps {
@@ -1301,13 +1705,18 @@ a {
   }
 
   .app-phones {
-    height: 440px;
+    height: 400px;
+    margin-top: 30px;
   }
 
   .app-phones img {
-    width: 190px;
-    margin-left: -60px;
+    max-height: 365px;
   }
+
+  .app-phones.in-view img:nth-child(1) { transform: translate(-75%, -12px); }
+  .app-phones.in-view img:nth-child(3) { transform: translate(-25%, 7px); }
+  .app-section--reversed .app-phones.in-view img:nth-child(1) { transform: translate(-25%, -12px); }
+  .app-section--reversed .app-phones.in-view img:nth-child(3) { transform: translate(-75%, 7px); }
 
   .contact-card {
     padding: 24px;
@@ -1356,5 +1765,52 @@ a {
 
   .locations-map {
     height: 320px;
+  }
+}
+
+/* ---------- Smooth fades between dark and light sections ---------- */
+/* Add .fade-top and/or .fade-bottom to a solid-colored section: its color (--from) fades smoothly
+   into the page background (--to) at that edge, with an eased curve (gentle at both ends).
+   Sections using it add extra padding so their content stays clear of the fade.
+   (Kept at the end of the file so it wins over the sections' own solid backgrounds.) */
+.fade-top,
+.fade-bottom {
+  --from: var(--dark);
+  --to: var(--bg);
+  --fade-top: 0px;
+  --fade-bottom: 0px;
+  background: linear-gradient(
+    to bottom,
+    var(--to) 0,
+    color-mix(in srgb, var(--from) 8%, var(--to)) calc(var(--fade-top) * 0.15),
+    color-mix(in srgb, var(--from) 30%, var(--to)) calc(var(--fade-top) * 0.35),
+    color-mix(in srgb, var(--from) 70%, var(--to)) calc(var(--fade-top) * 0.6),
+    color-mix(in srgb, var(--from) 92%, var(--to)) calc(var(--fade-top) * 0.82),
+    var(--from) var(--fade-top),
+    var(--from) calc(100% - var(--fade-bottom)),
+    color-mix(in srgb, var(--from) 92%, var(--to)) calc(100% - var(--fade-bottom) * 0.82),
+    color-mix(in srgb, var(--from) 70%, var(--to)) calc(100% - var(--fade-bottom) * 0.6),
+    color-mix(in srgb, var(--from) 30%, var(--to)) calc(100% - var(--fade-bottom) * 0.35),
+    color-mix(in srgb, var(--from) 8%, var(--to)) calc(100% - var(--fade-bottom) * 0.15),
+    var(--to) 100%
+  );
+}
+
+.fade-top {
+  --fade-top: 260px;
+}
+
+.fade-bottom {
+  --fade-bottom: 340px;
+}
+
+/* Shorter fades on phones */
+@media (max-width: 768px) {
+  .fade-top {
+    --fade-top: 180px;
+  }
+
+  .fade-bottom {
+    --fade-bottom: 220px;
   }
 }

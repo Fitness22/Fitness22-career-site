@@ -1,16 +1,23 @@
-import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 import StoreBadges from './StoreBadges.jsx';
+import useInView from '../hooks/useInView.js';
 
-// One app on the Our Apps page: text on one side, three phone screenshots
-// that fan out when scrolled into view on the other.
-// Screenshots are stacked in list order — the last one (the full phone) sits on top,
-// and the ones behind it peek out to the upper-left.
-export default function AppSection({ app, reversed }) {
-  const className = ['app-section', app.theme === 'light' && 'app-section--light', reversed && 'app-section--reversed']
+// One app on the Our Apps page: text on one side, three phone screenshots on the other.
+// Same animation as fitness22.com: the phones start stacked in the middle, and when the section
+// is 70% up the screen they fan out (CSS, see "Our Apps" in index.css) — the first phone moves
+// up to one side on top, the last one down to the other side behind. Every second app mirrors it.
+// fadeTop / fadeBottom: smooth fade into the light section above / below (dark sections only)
+export default function AppSection({ app, reversed, fadeTop, fadeBottom }) {
+  const [phonesRef, inView] = useInView({ rootMargin: '0px 0px -30% 0px' });
+  const className = [
+    'app-section',
+    app.theme === 'light' && 'app-section--light',
+    reversed && 'app-section--reversed',
+    fadeTop && 'fade-top',
+    fadeBottom && 'fade-bottom',
+  ]
     .filter(Boolean)
     .join(' ');
-  const last = app.screenshots.length - 1;
 
   return (
     <section id={app.id} className={className}>
@@ -34,29 +41,11 @@ export default function AppSection({ app, reversed }) {
         <StoreBadges appStore={app.appStore} googlePlay={app.googlePlay} />
       </div>
 
-      {/* The whole group is watched, so all phones animate together once it's on screen */}
-      <motion.div
-        className="app-phones"
-        initial="stacked"
-        whileInView="fanned"
-        viewport={{ once: true, amount: 0.3 }}
-      >
-        {app.screenshots.map((src, i) => {
-          const step = last - i; // 0 for the front phone, bigger for phones further back
-          return (
-            <motion.img
-              key={src}
-              src={src}
-              alt=""
-              variants={{
-                stacked: { x: 0, y: 0, opacity: 0 },
-                fanned: { x: `${-step * 25}%`, y: -step * 30, opacity: 1 },
-              }}
-              transition={{ duration: 1, ease: 'easeOut' }}
-            />
-          );
-        })}
-      </motion.div>
+      <div ref={phonesRef} className={inView ? 'app-phones in-view' : 'app-phones'}>
+        {app.screenshots.map((src) => (
+          <img key={src} src={src} alt="" loading="lazy" />
+        ))}
+      </div>
     </section>
   );
 }

@@ -7,7 +7,7 @@ export const apps = [
     name: 'Gymverse™',
     tagline: 'Build Muscle. Look Amazing.',
     icons: [img('gymverse-icon.png')],
-    // Phone screenshots, back to front: the last one is the full phone shown on top
+    // Phone screenshots: the first one is shown on top, the others fan out behind it
     screenshots: [img('gymverse-1.webp'), img('gymverse-2.webp'), img('gymverse-3.webp')],
     description:
       'We know that getting to the gym can be hard. We thought that creating an app that takes the guesswork out of building a weight-lifting plan would make things easier. Gymverse™ was developed to personally curate routines for every body type and fitness objective using over 500+ exercises and counting. We leverage our data to take the gym experience to the next level, creating smart predictive algorithms to help users progress and reach their goals! We continue to strive to meet our objective providing every person with the smartest training.',
@@ -20,6 +20,11 @@ export const apps = [
     name: '5K & 10K',
     tagline: 'Go From Couch to Runner in No Time',
     icons: [img('5k-icon.png'), img('10k-icon.png')],
+    // Two apps share this section: list them separately in the menu and the icon row
+    listedAs: [
+      { name: '5K Runner™', icon: img('5k-icon.png') },
+      { name: '10K Runner™', icon: img('10k-icon.png') },
+    ],
     screenshots: [img('runner-1.webp'), img('runner-2.webp'), img('runner-3.webp')],
     description:
       'Running is a sport that requires discipline and motivation, but not everyone knows where to start or how to progress. 5K & 10K were created to bridge the gap between the user’s ability and their goals. Using our proprietary technology, these apps understand the delicate starting points of the user and guide them on their personal journey to reach their goals. Developed and designed by runners, the app is able to break down the running plan into small achievable steps that are perfect for anyone who wants to start running or get in shape. With smart recommendations and progression capabilities, 5K & 10K are the #1 apps in their category.',
@@ -41,6 +46,16 @@ export const apps = [
     googlePlay: 'https://play.google.com/store/apps/details?id=com.fitness22.running&hl=en&gl=US',
   },
 ];
+
+// Every app as listed in the "Our Apps" menu and icon row: one entry per app (5K and 10K separately),
+// each linking to its section on the Our Apps page.
+export const appLinks = apps.flatMap((app) =>
+  (app.listedAs ?? [{ name: app.name, icon: app.icons[0] }]).map((entry) => ({
+    ...entry,
+    tagline: app.tagline,
+    sectionId: app.id,
+  })),
+);
 
 // Store pages listing all Fitness22 apps (used on the Contact page).
 export const developerPages = {

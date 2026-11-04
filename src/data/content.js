@@ -1,6 +1,6 @@
 // All the static text and links on the site live here.
 import { Award, Download, Star, TrendingUp } from 'lucide-react';
-import { apps } from './apps.js';
+import { appLinks } from './apps.js';
 
 export const links = {
   siteUrl: 'https://careers.fitness22.com', // where this site is published (used for share links)
@@ -15,11 +15,11 @@ export const navItems = [
   {
     label: 'Our Apps',
     to: '/our-apps',
-    subMenu: apps.map((app) => ({
+    subMenu: appLinks.map((app) => ({
       label: app.name,
       description: app.tagline,
-      icon: app.icons[0],
-      to: `/our-apps#${app.id}`,
+      icon: app.icon,
+      to: `/our-apps#${app.sectionId}`,
     })),
   },
   { label: 'Contact Us', to: '/contact' },
@@ -118,6 +118,56 @@ export const offices = [
     lng: 33.6201012,
   },
 ];
+
+// Our Apps page numbers (they count up from 0 when scrolled into view)
+export const stats = [
+  { value: '92', unit: 'M', label: 'Downloads' },
+  { value: '2.4', unit: 'M', label: '5 Star Reviews' },
+  { value: '107', unit: 'M', label: 'Kilometers Logged' },
+  { value: '11.4', unit: 'M', label: 'Fitness Plans' },
+];
+
+// Downloads per region on the Our Apps page globe, in millions (dot size grows with the number).
+// location is [latitude, longitude].
+export const downloadsByRegion = [
+  { id: 'north-america', name: 'North America', label: '14.8M', value: 14.8, location: [40, -100] },
+  { id: 'europe', name: 'Europe', label: '7.7M', value: 7.7, location: [50, 10] },
+  { id: 'asia', name: 'Asia', label: '3.1M', value: 3.1, location: [35, 105] },
+  { id: 'middle-east', name: 'Middle East', label: '2.8M', value: 2.8, location: [29, 45] },
+  { id: 'africa', name: 'Africa', label: '1.5M', value: 1.5, location: [2, 20] },
+  { id: 'oceania', name: 'Oceania', label: '1.3M', value: 1.3, location: [-25, 134] },
+  { id: 'south-america', name: 'S.America', label: '500K', value: 0.5, location: [-15, -60] },
+];
+
+// Our Apps page reviews (real App Store reviews, from fitness22.com)
+export const reviews = {
+  rating: 4.9,
+  title: '4.9/5.0',
+  subtitle: 'Overall Avg Rating',
+  items: [
+    {
+      title: 'Best running app!!!',
+      text: 'User - friendly and awesome! I’ve had a few other running/exercise apps before. This running app is by far the best! Easy to use and the features are great. It even sends you motivation messages occasionally.',
+      name: 'Brielle',
+      app: 'Running Trainer',
+      icon: '/images/apps/running-icon.png',
+    },
+    {
+      title: 'Amazing app!',
+      text: 'I’ve been using this app for years now and I have to say that, this is by far the best app I ever used for my weekly home and gym exercises. It has lots of tips and good videos. I bought the app like 3 years ago if not longer. Never had any issue with it.',
+      name: 'Kovasznai',
+      app: 'Gymverse™',
+      icon: '/images/apps/gymverse-icon.png',
+    },
+    {
+      title: 'Awesome I love this app.',
+      text: 'Getting back into running after a couple years off is not as easy as it seems…. It’s very easy to stop and walk as soon as I feel winded. But this app pushes you to go just a little bit further because you know a walk break is coming soon!! Love it!! It’s getting me back into the runner I used to be!',
+      name: 'Andicats',
+      app: '5K Runner',
+      icon: '/images/apps/5k-icon.png',
+    },
+  ],
+};
 
 export const about = {
   title: 'About *Fitness22*',

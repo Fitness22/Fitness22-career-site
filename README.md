@@ -20,10 +20,10 @@ src/
     jobs.js        open positions  ← edit this to add/remove jobs
     team.js        team members on the Who We Are page
     apps.js        apps on the Our Apps page
-    content.js     all other text, links, header navigation, offices
+    content.js     all other text, links, navigation, offices, Our Apps numbers, regions, reviews
   components/      header, footer and page sections (Cover, AppSection, TeamCard, JobList, ...)
   pages/           Home, JobPage (/jobs/:slug), WhoWeAre, OurApps, Contact, NotFound
-  hooks/useTilt.js 3D tilt-toward-the-mouse effect (team + job cards)
+  hooks/           useTilt (3D tilt toward the mouse), useInView (start animations on scroll)
   styles/index.css all styles; brand colors are CSS variables at the top
 ```
 
@@ -63,6 +63,13 @@ title: 'What You’ll *Actually* Do Here',
 ```
 
 They use the brand green (`--green` in `src/styles/index.css`).
+
+## Animations copied from fitness22.com
+
+- **Our Apps** (`AppSection.jsx`): the three phone screenshots fan out when the section scrolls into view.
+- **Our Apps numbers** (`Stats.jsx`): count up from 0. Edit `stats` in `content.js`.
+- **Our Apps globe** (`GlobeUsers.jsx`, uses the `cobe` library): downloads per region. Edit `downloadsByRegion`.
+- **Our Apps reviews** (`Reviews.jsx`): stars fill to the rating, review columns scroll. Edit `reviews`.
 
 ## Offices
 
