@@ -633,7 +633,7 @@ a {
   font-weight: 700;
 }
 
-/* ---------- Numbers + globe (components/Stats.jsx, GlobeUsers.jsx) ---------- */
+/* ---------- Numbers + downloads map (components/Stats.jsx) ---------- */
 .stats {
   padding: 240px var(--gutter) 280px; /* extra room for the fades at the top and bottom */
   color: #fff;
@@ -677,55 +677,111 @@ a {
   font-size: clamp(14px, 1.7vw, 24px);
 }
 
-.globe {
+/* Dotted world map with arcs from HQ (components/DownloadsMap.jsx) */
+.downloads-map {
   position: relative;
-  width: min(640px, 100%);
-  aspect-ratio: 1;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 40px auto 0;
   user-select: none;
 }
 
-.globe canvas {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  cursor: grab;
-  touch-action: none;
-  opacity: 0;
-  transition: opacity 1.2s ease; /* fades in once the globe is ready */
+.downloads-map-canvas {
+  position: relative; /* its aspect ratio (the dot grid's shape) is set in DownloadsMap.jsx */
 }
 
-/* Floating label above each dot, placed by CSS Anchor Positioning */
-.globe-label {
+.downloads-map img,
+.downloads-map svg {
   position: absolute;
-  bottom: anchor(top);
-  left: anchor(center);
-  translate: -50% -6px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The dots fade out softly on every edge, so the map blends into the section */
+.downloads-map img {
+  mask-image:
+    linear-gradient(to right, transparent, #000 15%, #000 85%, transparent),
+    linear-gradient(to bottom, transparent, #000 15%, #000 80%, transparent);
+  mask-composite: intersect;
+}
+
+.downloads-map-arc {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 0.2; /* in map units, like the dots */
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+
+.downloads-map-dot circle {
+  fill: var(--green);
+  shape-rendering: geometricPrecision; /* smooth round dots, even when tiny */
+}
+
+.downloads-map-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-pulse 2.4s ease-out infinite var(--delay);
+}
+
+@keyframes map-pulse {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(3.5); opacity: 0; }
+}
+
+/* Label above each dot; fades in after its arc is drawn */
+.downloads-map-label {
+  position: absolute;
+  translate: -50% calc(-100% - 14px);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 4px 10px;
-  line-height: 1.15;
-  white-space: nowrap;
-  pointer-events: none;
-  background: rgba(34, 44, 45, 0.85);
   border: 1px solid rgba(11, 249, 71, 0.35);
   border-radius: 8px;
-  transition: opacity 0.3s, filter 0.3s;
+  background: rgba(34, 44, 45, 0.85);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+  line-height: 1.25;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-.globe-label-name {
+.downloads-map.in-view .downloads-map-label {
+  opacity: 1;
+}
+
+.downloads-map-label--below {
+  translate: -50% 14px; /* under its dot, when the space above is taken */
+}
+
+.downloads-map-dot--hq circle {
+  fill: #fff;
+}
+
+.downloads-map-label--hq {
+  translate: calc(-100% - 6px) -50%; /* to the left of its dot */
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  border-color: transparent;
+  background: none;
+  backdrop-filter: none;
+}
+
+.downloads-map-name {
   font-size: 13px;
 }
 
-.globe-label-value {
+.downloads-map-value {
   font-size: 20px;
   font-weight: 700;
   color: var(--green);
 }
 
 /* The plain list is only for screen readers... */
-.globe-list {
+.downloads-map-list {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -733,22 +789,13 @@ a {
   clip: rect(0 0 0 0);
 }
 
-/* ...unless the browser can't place the labels: then show the list under the globe instead */
-@supports not (anchor-name: --a) {
-  .globe-label {
+/* ...except on phones, where it replaces the labels (they would overlap) */
+@media (max-width: 700px) {
+  .downloads-map-label {
     display: none;
   }
 
-  .globe {
-    aspect-ratio: auto;
-  }
-
-  .globe canvas {
-    aspect-ratio: 1;
-    height: auto;
-  }
-
-  .globe-list {
+  .downloads-map-list {
     position: static;
     width: auto;
     height: auto;
@@ -756,14 +803,14 @@ a {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px 24px;
-    margin: 20px 0 0;
+    gap: 8px 20px;
+    margin: 24px 0 0;
     padding: 0;
     list-style: none;
-    font-size: 18px;
+    font-size: 15px;
   }
 
-  .globe-list strong {
+  .downloads-map-list strong {
     color: var(--green);
   }
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { stats } from '../data/content.js';
 import useInView from '../hooks/useInView.js';
-import GlobeUsers from './GlobeUsers.jsx';
+import DownloadsMap from './DownloadsMap.jsx';
 
 const COUNT_DURATION_MS = 3500;
 const easeOut = (p) => 1 - Math.pow(1 - p, 4); // fast start, long gentle finish
@@ -34,7 +34,7 @@ function CountUp({ value, start }) {
   );
 }
 
-// Dark section with the big green numbers (counting up when scrolled into view) and the globe.
+// Dark section with the big green numbers (counting up when scrolled into view) and the downloads map.
 export default function Stats() {
   const [rowRef, inView] = useInView({ threshold: 0.6 });
 
@@ -50,7 +50,7 @@ export default function Stats() {
         ))}
       </div>
 
-      <GlobeUsers />
+      <DownloadsMap />
     </section>
   );
 }

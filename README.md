@@ -68,7 +68,7 @@ They use the brand green (`--green` in `src/styles/index.css`).
 
 - **Our Apps** (`AppSection.jsx`): the three phone screenshots fan out when the section scrolls into view.
 - **Our Apps numbers** (`Stats.jsx`): count up from 0. Edit `stats` in `content.js`.
-- **Our Apps globe** (`GlobeUsers.jsx`, uses the `cobe` library): downloads per region. Edit `downloadsByRegion`.
+- **Our Apps downloads map** (`DownloadsMap.jsx`, uses `dotted-map`): arcs from HQ to each region. Edit `downloadsByRegion` / `headquarters`.
 - **Our Apps reviews** (`Reviews.jsx`): stars fill to the rating, review columns scroll. Edit `reviews`.
 
 ## Offices

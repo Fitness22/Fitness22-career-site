@@ -127,13 +127,16 @@ export const stats = [
   { value: '11.4', unit: 'M', label: 'Fitness Plans' },
 ];
 
-// Downloads per region on the Our Apps page globe, in millions (dot size grows with the number).
+// Downloads per region on the Our Apps page map, in millions (dot size grows with the number).
 // location is [latitude, longitude].
+// Where the map's arcs start from
+export const headquarters = { name: 'Fitness22 HQ', location: [32.08, 34.88] };
+
 export const downloadsByRegion = [
   { id: 'north-america', name: 'North America', label: '14.8M', value: 14.8, location: [40, -100] },
   { id: 'europe', name: 'Europe', label: '7.7M', value: 7.7, location: [50, 10] },
   { id: 'asia', name: 'Asia', label: '3.1M', value: 3.1, location: [35, 105] },
-  { id: 'middle-east', name: 'Middle East', label: '2.8M', value: 2.8, location: [29, 45] },
+  { id: 'middle-east', name: 'Middle East', label: '2.8M', value: 2.8, location: [24, 48], labelBelow: true },
   { id: 'africa', name: 'Africa', label: '1.5M', value: 1.5, location: [2, 20] },
   { id: 'oceania', name: 'Oceania', label: '1.3M', value: 1.3, location: [-25, 134] },
   { id: 'south-america', name: 'S.America', label: '500K', value: 0.5, location: [-15, -60] },
