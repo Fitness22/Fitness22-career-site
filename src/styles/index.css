@@ -538,8 +538,9 @@ a {
   padding: 80px 40px;
   background: var(--gray);
   color: #fff;
+  /* white on light gray is low contrast: a soft dark shadow makes the letters stand out */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
 }
-
 
 .split-text .section-title {
   margin-bottom: 16px;
@@ -547,6 +548,7 @@ a {
 
 .split-text p {
   margin: 0 auto 12px;
+  font-weight: 600;
   max-width: 560px;
 }
 
@@ -1689,6 +1691,11 @@ a {
 
   .split-text {
     padding: 56px var(--gutter);
+  }
+
+  /* Home: start the text below the black fade from the hero (180px), so it sits on the gray */
+  #workplace .split-text {
+    padding-top: 190px;
   }
 
   .split-media {
