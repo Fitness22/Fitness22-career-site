@@ -65,10 +65,10 @@ export const jobPage = {
 
 export const hero = {
   title: 'Welcome to our *career site*',
-  video: '/video/hero-hd.mp4', // the original video, untouched (2276×1280)
+  video: '/video/hero-budapest.mp4', // Budapest trip video, 1920×1080, no sound
   // Phones show only the middle of the video in portrait, so they get that middle slice cut out at
-  // full resolution (1088×1280) — sharp on high-density phone screens, and a smaller file.
-  videoMobile: '/video/hero-phone.mp4',
+  // full resolution (912×1080) — sharp on high-density phone screens, and a smaller file.
+  videoMobile: '/video/hero-budapest-phone.mp4',
   poster: '/images/hero-poster.jpg',
 };
 

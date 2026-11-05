@@ -81,3 +81,4 @@ free OpenStreetMap tiles (no API key needed), shown in gray.
 
 `npm run build` outputs a static site in `dist/`. Since it uses client-side routing,
 the host must serve `index.html` for unknown paths (e.g. `/jobs/senior-ios-developer`).
+On Vercel this is set in `vercel.json`: import the GitHub repo (branch `production`) and it deploys on every push.

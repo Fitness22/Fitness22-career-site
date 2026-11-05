@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { stats } from '../data/content.js';
 import useInView from '../hooks/useInView.js';
-import DownloadsMap from './DownloadsMap.jsx';
+
+// The map's library (world data + projection) is large, so it is downloaded only when the Our Apps page opens
+const DownloadsMap = lazy(() => import('./DownloadsMap.jsx'));
 
 const COUNT_DURATION_MS = 3500;
 const easeOut = (p) => 1 - Math.pow(1 - p, 4); // fast start, long gentle finish
@@ -50,7 +52,9 @@ export default function Stats() {
         ))}
       </div>
 
-      <DownloadsMap />
+      <Suspense fallback={null}>
+        <DownloadsMap />
+      </Suspense>
     </section>
   );
 }
